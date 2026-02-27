@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -q '\\.ts'; then cd /Users/thorwhalen/Dropbox/py/proj/u/affordances_schema/zod-collections-ui && npx tsc --noEmit --pretty 2>&1 | tail -20; fi",
+            "timeout": 15000
+          }
+        ]
+      }
+    ]
+  }
+}
