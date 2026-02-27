@@ -1,0 +1,66 @@
+{
+  "name": "zod-collection-ui",
+  "version": "0.0.1",
+  "description": "Declare once, render anywhere. Schema-driven collection UIs from Zod — auto-generated table columns, form fields, filters, state, and data providers.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "example:basic": "tsx examples/01-basic-usage.ts",
+    "example:ecommerce": "tsx examples/02-ecommerce-catalog.ts",
+    "example:tasks": "tsx examples/03-task-tracker.ts",
+    "example:zero": "tsx examples/04-zero-config.ts"
+  },
+  "keywords": [
+    "zod",
+    "schema",
+    "ui",
+    "collection",
+    "table",
+    "form",
+    "filter",
+    "tanstack",
+    "headless",
+    "affordance",
+    "crud",
+    "schema-driven",
+    "declarative",
+    "code-generation"
+  ],
+  "author": "Thor Whalen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thorwhalen/zod-collection-ui"
+  },
+  "homepage": "https://github.com/thorwhalen/zod-collection-ui#readme",
+  "bugs": {
+    "url": "https://github.com/thorwhalen/zod-collection-ui/issues"
+  },
+  "peerDependencies": {
+    "zod": ">=4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0",
+    "zod": "^4.0.0"
+  }
+}
