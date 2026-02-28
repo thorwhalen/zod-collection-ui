@@ -25,7 +25,8 @@
     "example:basic": "tsx examples/01-basic-usage.ts",
     "example:ecommerce": "tsx examples/02-ecommerce-catalog.ts",
     "example:tasks": "tsx examples/03-task-tracker.ts",
-    "example:zero": "tsx examples/04-zero-config.ts"
+    "example:zero": "tsx examples/04-zero-config.ts",
+    "example:codegen": "tsx examples/05-codegen.ts"
   },
   "keywords": [
     "zod",
