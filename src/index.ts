@@ -41,6 +41,9 @@ export type { DataProvider, GetListParams, GetListResult, InMemoryProviderOption
 
 export { toPrompt } from './prompt.js';
 
+export { toCode, writeIfChanged, generateAndWrite } from './codegen.js';
+export type { CodegenOptions, WriteResult } from './codegen.js';
+
 export type {
   // Field-level
   FieldAffordance,
