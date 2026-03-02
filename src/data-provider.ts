@@ -39,6 +39,18 @@ export interface DataProvider<T> {
   updateMany(ids: string[], data: Partial<T>): Promise<T[]>;
   delete(id: string): Promise<void>;
   deleteMany(ids: string[]): Promise<void>;
+
+  /**
+   * Insert or update a complete item.
+   *
+   * If an item with the same id exists, it is replaced entirely.
+   * If no item exists, it is inserted. This is useful for backends
+   * that use put/upsert semantics (e.g., IndexedDB, key-value stores)
+   * rather than separate create/update paths.
+   *
+   * Optional — not all providers need to implement this.
+   */
+  upsert?(data: T): Promise<T>;
 }
 
 // ============================================================================
@@ -245,6 +257,19 @@ export function createInMemoryProvider<T extends Record<string, any>>(
       await maybeDelay();
       const idSet = new Set(ids);
       items = items.filter(i => !idSet.has(getItemId(i)));
+    },
+
+    async upsert(data: T): Promise<T> {
+      await maybeDelay();
+      const id = getItemId(data);
+      const index = items.findIndex(i => getItemId(i) === id);
+      const item = { ...data };
+      if (index === -1) {
+        items.push(item);
+      } else {
+        items[index] = item;
+      }
+      return { ...item };
     },
   };
 }

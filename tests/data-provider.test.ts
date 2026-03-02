@@ -304,6 +304,50 @@ describe('createInMemoryProvider - CRUD', () => {
 });
 
 // ============================================================================
+// Upsert
+// ============================================================================
+
+describe('createInMemoryProvider - upsert', () => {
+  it('inserts a new item when id does not exist', async () => {
+    const provider = freshProvider();
+    const result = await provider.upsert!({
+      id: 'new-1', name: 'New Item', status: 'draft', priority: 1, tags: [],
+    });
+    expect(result.id).toBe('new-1');
+    expect(result.name).toBe('New Item');
+
+    const { data } = await provider.getList({});
+    expect(data).toHaveLength(6);
+    expect(data.find(d => d.id === 'new-1')).toBeDefined();
+  });
+
+  it('replaces an existing item when id exists', async () => {
+    const provider = freshProvider();
+    const result = await provider.upsert!({
+      id: '2', name: 'Updated Beta', status: 'archived', priority: 99, tags: ['replaced'],
+    });
+    expect(result.name).toBe('Updated Beta');
+    expect(result.priority).toBe(99);
+
+    const { data } = await provider.getList({});
+    expect(data).toHaveLength(5); // same count, not duplicated
+    const item = data.find(d => d.id === '2');
+    expect(item!.name).toBe('Updated Beta');
+    expect(item!.tags).toEqual(['replaced']);
+  });
+
+  it('replaces the entire item, not merging', async () => {
+    const provider = freshProvider();
+    // Original item '1' has tags: ['web', 'frontend']
+    await provider.upsert!({
+      id: '1', name: 'Replaced', status: 'draft', priority: 0, tags: [],
+    });
+    const item = await provider.getOne('1');
+    expect(item.tags).toEqual([]); // not merged with old tags
+  });
+});
+
+// ============================================================================
 // Options
 // ============================================================================
 
